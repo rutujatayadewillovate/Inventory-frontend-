@@ -1,7 +1,22 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React ,  { useState }from 'react'
+import { Link   } from "react-router-dom";
+import { handleLoginSubmit } from '../../../api/authApi';
+
 
 function StaffLogin() {
+
+    const [ staffLoginForm , setLoginForm ] = useState({   
+            "designation" : "Staff" , 
+            "email" : "" , 
+            "password" : "" 
+        } )
+    
+        const handlechange = ( e ) => { 
+            setLoginForm({ 
+                ...staffLoginForm , 
+                [ e.target.id ] : e.target.value , 
+            }) ; 
+        } ; 
 
   return (
   
@@ -28,6 +43,8 @@ function StaffLogin() {
                 <input
                     id="email"
                     type="email"
+                    value={ staffLoginForm.email }
+                    onChange={ handlechange }
                     placeholder="Enter your email"
                     className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
                 />
@@ -44,6 +61,8 @@ function StaffLogin() {
                 <input
                     id="password"
                     type="password"
+                    value={ staffLoginForm.password }
+                    onChange={ handlechange }
                     placeholder="Enter your password"
                     className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
                 />
@@ -54,6 +73,7 @@ function StaffLogin() {
             type="submit"
             className="w-full border border-blue-600 rounded-xl px-4 py-2
                         text-blue-600 hover:bg-blue-600 hover:text-white transition"
+            onClick={ ( e) => { handleLoginSubmit( e, staffLoginForm )}}
             >
             Login As Staff
             </button>
@@ -68,8 +88,10 @@ function StaffLogin() {
                 </Link>
             </div>
 
+            {/* temprory not creating staff from staff itself  */}
+            
             {/* Create Account */}
-            <div className="w-full border-t border-slate-200 pt-4 text-center">
+            {/* <div className="w-full border-t border-slate-200 pt-4 text-center">
                 <p className="text-sm text-slate-500">
                     Don't have an account?
                 </p>
@@ -80,7 +102,7 @@ function StaffLogin() {
                 >
                     Create Account  
                 </Link>
-            </div>
+            </div> */}
 
         </div>
     </div>

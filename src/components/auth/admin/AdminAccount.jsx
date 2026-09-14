@@ -1,7 +1,25 @@
-import React from 'react'
-import { Link , useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import { handleUserSubmit } from '../../../api/authApi';
 
 function AdminAccount() {
+
+  const [ adminformData , setFormData ] = useState( { 
+    "designation" : "Admin" , 
+    "name" : "" , 
+    "email" : "" , 
+    "password" : "" , 
+    "confirmPassword" : ""
+  })
+
+  const handlechange = ( e ) => { 
+     setFormData( {
+      ...adminformData ,     // copy existing 
+      [e.target.id ] : e.target.value , // update new 
+     }) ; 
+  } ; 
+
+  
 
   const navigate = useNavigate();
   return (
@@ -43,6 +61,8 @@ function AdminAccount() {
           <input
             id="name"
             type="text"
+            value={ adminformData.name }
+            onChange={ handlechange }
             placeholder="Enter your name"
             className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -60,6 +80,8 @@ function AdminAccount() {
           <input
             id="email"
             type="email"
+            value={ adminformData.email }
+            onChange={ handlechange } 
             placeholder="Enter your email"
             className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -77,6 +99,8 @@ function AdminAccount() {
           <input
             id="password"
             type="password"
+            value={ adminformData.password }
+            onChange={ handlechange } 
             placeholder="Enter your password"
             className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -94,6 +118,8 @@ function AdminAccount() {
           <input
             id="confirmPassword"
             type="password"
+            value={ adminformData.confirmPassword }
+            onChange={ handlechange } 
             placeholder="Confirm your password"
             className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -103,6 +129,7 @@ function AdminAccount() {
         <button
           type="button"
           className="w-full border border-blue-600 rounded-xl px-4 py-2 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+          onClick={ (e) => handleUserSubmit( e , adminformData ) }
         >
           Create Account As Admin
         </button>

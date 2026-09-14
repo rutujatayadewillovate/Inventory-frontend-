@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link , useNavigate } from "react-router-dom";
+import { handleUserSubmit } from '../../../api/authApi';
+
 
 function StaffAccount() {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate() 
+  const [ staffFromData , setFormData] = useState ( { 
+    "designation" : "staff"  , 
+    "name" : "" , 
+    "email" : "" , 
+    "password" : "" , 
+    "confirmPassword" : "" 
+  });
+
+  const handlechange = ( e ) => { 
+    setFormData( 
+      { 
+      ...staffFromData ,       // in setformdate make take values as it is 
+      [e.target.id ] : e.target.value    // update value of id with the value
+   }  ) ; 
+  } ; 
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center">
@@ -43,6 +60,8 @@ function StaffAccount() {
           <input
             id="name"
             type="text"
+            value={staffFromData.name }
+            onChange={handlechange}
             placeholder="Enter your name"
            className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -60,6 +79,8 @@ function StaffAccount() {
           <input
             id="email"
             type="email"
+            value={ staffFromData.email }
+            onChange={handlechange}
             placeholder="Enter your email"
            className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -77,6 +98,8 @@ function StaffAccount() {
           <input
             id="password"
             type="password"
+            value={ staffFromData.password }
+            onChange={handlechange}
             placeholder="Enter your password"
             className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -94,6 +117,8 @@ function StaffAccount() {
           <input
             id="confirmPassword"
             type="password"
+            value={ staffFromData.confirmPassword }
+            onChange={handlechange}
             placeholder="Confirm your password"
             className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
           />
@@ -103,6 +128,7 @@ function StaffAccount() {
         <button
           type="button"
           className="w-full border border-blue-600 rounded-xl px-4 py-2 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+          onClick={(e)=>{ handleUserSubmit(e , staffFromData)}}
         >
           Create Account
         </button>

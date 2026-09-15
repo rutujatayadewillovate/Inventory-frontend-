@@ -1,3 +1,5 @@
+import axiosClient from './axiosClient';
+
 // Mock data for Dashboard & Reports
 const mockProducts = [
   { productId: 1, sku: 'LTP-001', name: 'Dell XPS 13', currentStock: 4, reorderLevel: 10, isLowStock: true, price: 1200, category: 'Laptops' },
@@ -20,22 +22,21 @@ const delay = (ms) => new Promise(res => setTimeout(res, ms));
 export const reportsApi = {
   // Returns summary metrics
   getSummaryMetrics: async () => {
-    await delay(300); // Simulate network latency
-    const totalProducts = mockProducts.length;
-    const lowStockCount = mockProducts.filter(p => p.isLowStock).length;
-    const totalStockValue = mockProducts.reduce((sum, p) => sum + (p.currentStock * p.price), 0);
-    const totalSales = 12500; // Mock total sales metric
-
-    return {
-      totalProducts,
-      lowStockCount,
-      totalStockValue,
-      totalSales
-    };
+    try {
+      const response = await axiosClient.get('/reports/summary');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching summary metrics:', error);
+      return { totalProducts: 0, lowStockCount: 0, totalStockValue: 0, totalSales: 0 };
+    }
   },
 
   // Returns paginated low stock items (matching .NET PagedResult)
   getLowStockItems: async (page = 1, pageSize = 20) => {
+    /*
+    const response = await axiosClient.get(`/inventory/stock?page=${page}&pageSize=${pageSize}`);
+    return response.data;
+    */
     await delay(300);
     const lowStock = mockProducts.filter(p => p.isLowStock);
     return {
@@ -48,6 +49,10 @@ export const reportsApi = {
 
   // Returns stock valuation list
   getStockValuation: async (page = 1, pageSize = 20) => {
+    /*
+    const response = await axiosClient.get(`/inventory/stock?page=${page}&pageSize=${pageSize}`);
+    return response.data;
+    */
     await delay(300);
     const items = mockProducts.map(p => ({
       ...p,
@@ -64,6 +69,10 @@ export const reportsApi = {
 
   // Returns movement history based on filters
   getMovementHistory: async (filters = {}) => {
+    /*
+    const response = await axiosClient.get('/inventory/transactions', { params: filters });
+    return response.data;
+    */
     await delay(400);
     let filtered = [...mockTransactions];
 

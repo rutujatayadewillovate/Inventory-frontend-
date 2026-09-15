@@ -5,11 +5,12 @@ import { handleUserSubmit } from '../../../api/authApi';
 function AdminAccount() {
 
   const [ adminformData , setFormData ] = useState( { 
-    "designation" : "Admin" , 
+    "role" : "Admin" , 
     "name" : "" , 
     "email" : "" , 
     "password" : "" , 
-    "confirmPassword" : ""
+    "confirmPassword" : "" , 
+    "status" : "Active"
   })
 
   const handlechange = ( e ) => { 

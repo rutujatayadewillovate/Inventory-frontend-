@@ -7,11 +7,12 @@ function StaffAccount() {
 
   const navigate = useNavigate() 
   const [ staffFromData , setFormData] = useState ( { 
-    "designation" : "staff"  , 
+    "role" : "staff"  , 
     "name" : "" , 
     "email" : "" , 
     "password" : "" , 
-    "confirmPassword" : "" 
+    "confirmPassword" : "" , 
+    "status" : "Active"
   });
 
   const handlechange = ( e ) => { 

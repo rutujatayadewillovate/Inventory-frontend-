@@ -8,6 +8,12 @@ import StaffAccount from "../components/auth/staff/StaffAccount"
 import StaffForgotPassword from "../components/auth/staff/StaffForgotPassword"
 import DashboardPage from "../pages/DashboardPage"
 import ReportsPage from "../pages/ReportsPage"
+import ProductsPage from "../pages/ProductsPage"
+import AddEditProductPage from "../pages/AddEditProductPage"
+import ProductDetailsPage from "../pages/ProductDetailsPage"
+import InventoryPage from "../pages/InventoryPage"
+import SuppliersPage from "../pages/SuppliersPage"
+import PurchaseOrdersPage from "../pages/PurchaseOrdersPage"
 import MainLayout from "../components/common/MainLayout"
 
 // Temporary mock admin guard (will be replaced by Person 1's AuthContext logic)
@@ -36,6 +42,33 @@ const AppRoutes = () => {
         {/* Protected Application Routes */}
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          
+          {/* Product Routes */}
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/add" element={<AddEditProductPage />} />
+          <Route path="/products/edit/:id" element={<AddEditProductPage />} />
+          <Route path="/products/:id" element={<ProductDetailsPage />} />
+          
+          {/* Inventory Route */}
+          <Route path="/inventory" element={<InventoryPage />} />
+          
+          {/* Admin Routes */}
+          <Route 
+            path="/suppliers" 
+            element={
+              <AdminRoute>
+                <SuppliersPage />
+              </AdminRoute>
+            } 
+          />
+          <Route 
+            path="/purchase-orders" 
+            element={
+              <AdminRoute>
+                <PurchaseOrdersPage />
+              </AdminRoute>
+            } 
+          />
           <Route 
             path="/reports" 
             element={

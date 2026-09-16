@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";  
 import React from 'react';
+import { AuthProvider } from "../context/AuthContext";
+
 import Index from "../components/auth/Index";
 
 import AdminLogin from "../components/auth/admin/AdminLogin";
@@ -15,11 +17,13 @@ import ProductsPage from "../pages/ProductsPage";
 import SuppliersPage from "../pages/SuppliersPage";
 import PurchaseOrdersPage from "../pages/PurchaseOrdersPage";
 import InventoryPage from "../pages/InventoryPage";
+import ReportsPage from "../pages/ReportsPage";
 
 import Layout from "../components/common/Layout";
 
 const AppRoutes = () => {
   return (
+    <AuthProvider>
      <BrowserRouter>
       <Routes>
         {/* Auth Routes */}
@@ -28,11 +32,10 @@ const AppRoutes = () => {
         <Route path="/admin-login" element={<AdminLogin />} /> 
         <Route path="/admin-forgot-Password" element={ <AdminForgotPassword/> }/> 
         <Route path="/admin-register" element={  <AdminAccount/> } /> 
-
         <Route path="/staff-login" element={<StaffLogin />} /> 
         <Route path="/staff-forgot-Password" element={ <StaffForgotPassword/> }/> 
-        <Route path="/staff-register" element={  <StaffAccount/> } /> Staff
-
+        <Route path="/staff-register" element={  <StaffAccount/> } /> 
+        
         {/* Application Routes */}
         <Route element={<Layout />}>
           <Route path="/inventory" element={<InventoryPage />} />
@@ -40,10 +43,12 @@ const AppRoutes = () => {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/suppliers" element={<SuppliersPage />} />
           <Route path="/purchase-orders" element={<PurchaseOrdersPage />} />  
+          <Route path="/reports" element={<ReportsPage />} />
         </Route>
 
       </Routes>
     </BrowserRouter>
+  </AuthProvider>
   );
 };
 

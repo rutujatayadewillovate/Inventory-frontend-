@@ -46,6 +46,45 @@ const AppRoutes = () => {
           <Route path="/reports" element={<ReportsPage />} />
         </Route>
 
+        {/* Protected Application Routes */}
+        <Route element={<MainLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          
+          {/* Product Routes */}
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/add" element={<AddEditProductPage />} />
+          <Route path="/products/edit/:id" element={<AddEditProductPage />} />
+          <Route path="/products/:id" element={<ProductDetailsPage />} />
+          
+          {/* Inventory Route */}
+          <Route path="/inventory" element={<InventoryPage />} />
+          
+          {/* Admin Routes */}
+          <Route 
+            path="/suppliers" 
+            element={
+              <AdminRoute>
+                <SuppliersPage />
+              </AdminRoute>
+            } 
+          />
+          <Route 
+            path="/purchase-orders" 
+            element={
+              <AdminRoute>
+                <PurchaseOrdersPage />
+              </AdminRoute>
+            } 
+          />
+          <Route 
+            path="/reports" 
+            element={
+              <AdminRoute>
+                <ReportsPage />
+              </AdminRoute>
+            } 
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   </AuthProvider>

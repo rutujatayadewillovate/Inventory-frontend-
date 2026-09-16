@@ -20,6 +20,9 @@ import InventoryPage from "../pages/InventoryPage";
 import ReportsPage from "../pages/ReportsPage";
 
 import Layout from "../components/common/Layout";
+import MainLayout from "../components/common/MainLayout";
+import AddEditProductPage from "../pages/AddEditProductPage";
+import ProductDetailsPage from "../pages/ProductDetailsPage";
 
 const AppRoutes = () => {
   return (
@@ -36,15 +39,7 @@ const AppRoutes = () => {
         <Route path="/staff-forgot-Password" element={ <StaffForgotPassword/> }/> 
         <Route path="/staff-register" element={  <StaffAccount/> } /> 
         
-        {/* Application Routes */}
-        <Route element={<Layout />}>
-          <Route path="/inventory" element={<InventoryPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/suppliers" element={<SuppliersPage />} />
-          <Route path="/purchase-orders" element={<PurchaseOrdersPage />} />  
-          <Route path="/reports" element={<ReportsPage />} />
-        </Route>
+
 
         {/* Protected Application Routes */}
         <Route element={<MainLayout />}>
@@ -63,25 +58,19 @@ const AppRoutes = () => {
           <Route 
             path="/suppliers" 
             element={
-              <AdminRoute>
-                <SuppliersPage />
-              </AdminRoute>
+              <SuppliersPage />
             } 
           />
           <Route 
             path="/purchase-orders" 
             element={
-              <AdminRoute>
-                <PurchaseOrdersPage />
-              </AdminRoute>
+              <PurchaseOrdersPage />
             } 
           />
           <Route 
             path="/reports" 
             element={
-              <AdminRoute>
-                <ReportsPage />
-              </AdminRoute>
+              <ReportsPage />
             } 
           />
         </Route>

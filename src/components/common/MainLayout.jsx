@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
-import { NavLink, Outlet, Navigate, useLocation } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { NavLink, Outlet, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 const MainLayout = () => {
-  // Temporary mock auth state - Person 1 will replace this with AuthContext
-  const userRole = 'admin'; // change to 'staff' to test
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
+
+  const userRole = user.role || 'staff';
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: 'bi-house', roles: ['admin', 'staff'] },
@@ -53,7 +60,13 @@ const MainLayout = () => {
         </nav>
 
         <div className="p-4 border-t border-slate-700">
-          <button className="flex items-center gap-2 text-slate-400 hover:text-white text-sm w-full">
+          <button 
+            onClick={() => {
+              logout();
+              navigate('/');
+            }}
+            className="flex items-center gap-2 text-slate-400 hover:text-white text-sm w-full"
+          >
             <i className="bi bi-box-arrow-left"></i>
             Logout
           </button>

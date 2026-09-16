@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";  
+import { useContext } from "react";
+import { AuthProvider, AuthContext } from "../context/AuthContext";
 import Index from "../components/auth/Index";
 import AdminLogin from "../components/auth/admin/AdminLogin"
 import AdminAccount from "../components/auth/admin/AdminAccount"
@@ -16,17 +18,19 @@ import SuppliersPage from "../pages/SuppliersPage"
 import PurchaseOrdersPage from "../pages/PurchaseOrdersPage"
 import MainLayout from "../components/common/MainLayout"
 
-// Temporary mock admin guard (will be replaced by Person 1's AuthContext logic)
+// Real Admin Guard using AuthContext
 const AdminRoute = ({ children }) => {
-  const userRole = 'admin'; // change to 'staff' to test redirect
-  if (userRole !== 'admin') {
-    return <Navigate to="/dashboard" replace />;
+  const { user } = useContext(AuthContext);
+  
+  if (!user || user.role !== 'admin') {
+    return <Navigate to="/" replace />;
   }
   return children;
 };
 
 const AppRoutes = () => {
   return (
+    <AuthProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
@@ -80,6 +84,7 @@ const AppRoutes = () => {
         </Route>
       </Routes>
     </BrowserRouter>
+    </AuthProvider>
   );
 };
 

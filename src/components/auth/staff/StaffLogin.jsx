@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
-function StaffLogin() {
+export default function StaffLogin() {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Staff Logging in:", { email, password });
+
+    // Set user as staff in AuthContext
+    login({
+      name: "Store Staff",
+      email: email || "staff@electrostore.com",
+      role: "staff",
+    });
+
+    // Navigate to Inventory page
+    navigate("/dashboard");
   };
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      
-      {/* Matching Elevated Card */}
+      {/* Staff Login Card */}
       <div className="w-full max-w-md bg-white rounded-3xl p-8 border border-slate-200/90 shadow-[0_4px_25px_-4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.02)] text-slate-800 transition-all">
         
         {/* Top Header Navigation & Role Badge */}
@@ -50,7 +61,6 @@ function StaffLogin() {
 
         {/* Form Fields */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          
           {/* Email */}
           <div>
             <label
@@ -65,7 +75,7 @@ function StaffLogin() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="staff@electrostore.com"
+              placeholder="Enter your email"
               className="w-full bg-slate-50/70 border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-500/15 transition"
             />
           </div>
@@ -92,7 +102,7 @@ function StaffLogin() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••••••"
+              placeholder="Enter your password"
               className="w-full bg-slate-50/70 border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-500/15 transition"
             />
           </div>
@@ -124,5 +134,3 @@ function StaffLogin() {
     </div>
   );
 }
-
-export default StaffLogin;

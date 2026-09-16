@@ -37,7 +37,24 @@ export const reportsApi = {
   // Returns movement history based on filters
   getMovementHistory: async (filters = {}) => {
     try {
-      const response = await axiosClient.get('/inventory/transactions', { params: filters });
+      const queryParams = {
+        page: filters.page || 1,
+        pageSize: filters.pageSize || 20
+      };
+
+      if (filters.search) queryParams.search = filters.search;
+      
+      if (filters.type && filters.type !== 'All') {
+        if (filters.type === 'Purchase') queryParams.type = 'RECEIVED';
+        else if (filters.type === 'Issue') queryParams.type = 'ISSUED';
+        else if (filters.type === 'Adjustment') queryParams.type = 'ADJUSTMENT';
+        else queryParams.type = filters.type.toUpperCase();
+      }
+
+      if (filters.startDate) queryParams.fromDate = filters.startDate;
+      if (filters.endDate) queryParams.toDate = filters.endDate;
+
+      const response = await axiosClient.get('/inventory/transactions', { params: queryParams });
       return response.data;
     } catch (error) {
       console.error('Error fetching movement history:', error);

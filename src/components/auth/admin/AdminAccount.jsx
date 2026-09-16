@@ -1,125 +1,166 @@
-import React from 'react'
-import { Link , useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
 function AdminAccount() {
-
   const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Creating Admin Account:", formData);
+  };
+
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      
+      {/* Modern Card Matching System Theme */}
+      <div className="w-full max-w-md bg-white rounded-3xl p-7 border border-slate-200/90 shadow-[0_4px_25px_-4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.02)] text-slate-800 transition-all">
+        
+        {/* Top Header Navigation & Role Badge */}
+        <div className="flex items-center justify-between mb-3">
+          <button
+            type="button"
+            onClick={() => navigate("/admin-login")}
+            className="text-xs font-semibold text-slate-500 hover:text-blue-600 transition flex items-center gap-1"
+          >
+            ← Back to Login
+          </button>
 
-      <div className="w-full max-w-sm bg-white border border-slate-200 rounded-xl p-4 shadow-md flex flex-col items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+            Admin Portal
+          </span>
+        </div>
 
-        {/* Header */}
-        <div className="w-full flex flex-col items-center justify-center mb-2">
-          <h1 className="text-2xl font-bold text-blue-600">
-            ElectroStore
+        {/* Brand & Heading */}
+        <div className="text-center mb-5">
+          <h1 className="text-2xl font-black tracking-tight text-slate-900">
+            Electro<span className="text-blue-600">Store</span>
           </h1>
-
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
             Inventory & Billing System
           </p>
-        </div>
 
-        {/* Title */}
-        <div className="w-full text-center">
-          <h2 className="text-xl font-semibold text-slate-800">
-            Create Account
-          </h2>
-
-          <p className="text-sm text-slate-500 mt-1">
-            Create a new user account
+          <h2 className="text-base font-bold text-slate-800 mt-3">Create Admin Account</h2>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Register a new administrator console account
           </p>
         </div>
 
-        {/* Name */}
-        <div className="w-full">
-          <label
-            htmlFor="name"
-            className="block text-left text-sm font-medium text-slate-700 mb-2"
+        {/* Registration Form */}
+        <form onSubmit={handleSubmit} className="space-y-3.5">
+          {/* Full Name */}
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-xs font-semibold text-slate-700 mb-1"
+            >
+              Full Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="e.g. Vikram Sharma"
+              className="w-full bg-slate-50/70 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-800 placeholder-slate-400 outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-500/15 transition"
+            />
+          </div>
+
+          {/* Email Address */}
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-xs font-semibold text-slate-700 mb-1"
+            >
+              Email Address
+            </label>
+            <input
+              id="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="admin@electrostore.com"
+              className="w-full bg-slate-50/70 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-800 placeholder-slate-400 outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-500/15 transition"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-xs font-semibold text-slate-700 mb-1"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="••••••••••••"
+              className="w-full bg-slate-50/70 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-800 placeholder-slate-400 outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-500/15 transition"
+            />
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="block text-xs font-semibold text-slate-700 mb-1"
+            >
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              required
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="••••••••••••"
+              className="w-full bg-slate-50/70 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-800 placeholder-slate-400 outline-none focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-500/15 transition"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2 group active:scale-[0.99] mt-3"
           >
-            Name
-          </label>
+            <span>Create Account As Admin</span>
+            <span className="transition-transform group-hover:translate-x-1">→</span>
+          </button>
+        </form>
 
-          <input
-            id="name"
-            type="text"
-            placeholder="Enter your name"
-            className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
-          />
+        {/* Footer Link */}
+        <div className="w-full border-t border-slate-100 mt-5 pt-3.5 text-center">
+          <p className="text-xs text-slate-500">
+            Already registered?{" "}
+            <Link
+              to="/admin-login"
+              className="font-semibold text-blue-600 hover:underline"
+            >
+              Sign In Instead
+            </Link>
+          </p>
         </div>
-
-        {/* Email */}
-        <div className="w-full">
-          <label
-            htmlFor="email"
-            className="block text-left text-sm font-medium text-slate-700 mb-2"
-          >
-            Email
-          </label>
-
-          <input
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
-          />
-        </div>
-
-        {/* Password */}
-        <div className="w-full">
-          <label
-            htmlFor="password"
-            className="block text-left text-sm font-medium text-slate-700 mb-2"
-          >
-            Password
-          </label>
-
-          <input
-            id="password"
-            type="password"
-            placeholder="Enter your password"
-            className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
-          />
-        </div>
-
-        {/* Confirm Password */}
-        <div className="w-full">
-          <label
-            htmlFor="confirmPassword"
-            className="block text-left text-sm font-medium text-slate-700 mb-2"
-          >
-            Confirm Password
-          </label>
-
-          <input
-            id="confirmPassword"
-            type="password"
-            placeholder="Confirm your password"
-            className="w-full border border-slate-300 rounded-xl px-4 py-2 outline-none focus:border-blue-500"
-          />
-        </div>
-
-        {/* Create Account Button */}
-        <button
-          type="button"
-          className="w-full border border-blue-600 rounded-xl px-4 py-2 text-blue-600 hover:bg-blue-600 hover:text-white transition"
-        >
-          Create Account As Admin
-        </button>
-
-        {/* Back to Login */}
-        <button
-          type="button"
-          className="text-sm text-blue-600 hover:underline"
-          onClick={ () => navigate("/admin-login")}
-        >
-          Back to Login
-        </button>
 
       </div>
     </div>
   );
 }
 
-export default AdminAccount 
-
+export default AdminAccount;
